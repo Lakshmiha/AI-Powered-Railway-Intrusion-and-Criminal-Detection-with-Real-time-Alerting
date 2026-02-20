@@ -171,19 +171,15 @@ def change_password_post(request):
     confirm_pass = request.POST['confirmpassword']
 
     data=request.user
-    if not data.check_password(current_pass):
-        messages.error(request, 'invalid password')
+    if  data.check_password(current_pass):
+        if new_pass==confirm_pass:
+            data.set_password(new_pass)
+            data.save()
+            return redirect("/myapp/login_get/")
+        else:
+            return redirect("/myapp/change_password_get/")
+    else:
         return redirect("/myapp/change_password_get/")
-
-    if new_pass != confirm_pass:
-        messages.error(request, "password doesn't match")
-        return redirect("/myapp/change_password_get/")
-
-    data.set_password(new_pass)
-    data.save()
-    return redirect("/myapp/login_get/")
-
-
 
 
 def edit_authority_get(request,id):
