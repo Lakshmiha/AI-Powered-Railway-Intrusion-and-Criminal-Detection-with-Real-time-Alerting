@@ -75,6 +75,6 @@ class logs(models.Model):
     date = models.DateField()
     time = models.TimeField()
     result = models.CharField(max_length=100)
-    USER = models.ForeignKey(Users,on_delete=models.CASCADE())
+    USER = models.ForeignKey(Users,on_delete=models.CASCADE)
 
 

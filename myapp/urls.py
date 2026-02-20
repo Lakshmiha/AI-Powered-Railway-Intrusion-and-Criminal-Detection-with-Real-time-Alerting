@@ -42,6 +42,13 @@ urlpatterns = [
     path('blockeduser/<id>',views.blockeduser),
     path('logout_get/',views.logout_get),
     path('delete_authority/<id>',views.delete_authority),
+    path('add_police_get/', views.add_police_get),
+    path('add_police_post/', views.add_police_post),
+    path('viewpolice_get/', views.viewpolice_get),
+    path('delete_police/<id>', views.delete_police),
+    path('edit_police_get/<id>', views.edit_police_get),
+    path('edit_police_post/', views.edit_police_post),
+    path('admin_viewcriminaldetection_get/', views.admin_viewcriminaldetection_get),
 
     # authority---
     path('authority_home/',views.authority_home),
@@ -63,16 +70,14 @@ urlpatterns = [
     path('viewprofile_get/', views.viewprofile_get),
     path('viewreply_get/', views.viewreply_get),
 
+
     # police---
-    path('edit_police_get/', views.edit_police_get),
-    path('edit_police_post/', views.edit_police_post),
     path('register_police_get/', views.register_police_get),
     path('register_police_post/', views.register_police_post),
     path('sendcomplaintpolice_get/', views.sendcomplaintpolice_get),
     path('sendcomplaintpolice_post/', views.sendcomplaintpolice_post),
     path('viewcriminaldetectionpolice_get/', views.viewcriminaldetectionpolice_get),
     path('viewobjectdetectionpolice_get/', views.viewobjectdetectionpolice_get),
-    path('viewpolice_get/', views.viewpolice_get),
     path('viewreplypolice_get/', views.viewreplypolice_get),
 
 

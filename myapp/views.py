@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect
 
 
 # Create your views here.
-from myapp.models import Complaint, Users, logs, Authority, Criminals
+from myapp.models import Complaint, Users, logs, Authority, Criminals, Police, Criminaldetection
 
 
 def login_get(request):
@@ -77,11 +77,90 @@ def add_authority_post(request):
     a.pin=pin
     a.district=district
     a.state=state
-    a.AUTHUSER=u
+    a.USER=u
     a.save()
-
-
     return redirect('/myapp/viewauthority_get/')
+
+
+def add_police_get(request):
+    return render(request,'admins/add_police.html')
+
+
+def add_police_post(request):
+    name = request.POST['name']
+    email = request.POST['email']
+    photo = request.FILES['photo']
+    phoneno = request.POST['phoneno']
+    post=request.POST['post']
+    place = request.POST['place']
+    pin = request.POST['pincode']
+
+    fs = FileSystemStorage()
+    date = datetime.now().strftime('%d%M%Y%H%M%S') + ".jpg"
+    fs.save(date, photo)
+    path = fs.url(date)
+
+    u = User.objects.create_user(username=email, password=phoneno)
+    u.groups.add(Group.objects.get(name="police"))
+    u.save()
+
+    a = Police()
+    a.name = name
+    a.email = email
+    a.photo = path
+    a.phoneno = phoneno
+    a.post = post
+    a.place = place
+    a.pin = pin
+    a.USER = u
+    a.save()
+    return redirect('/myapp/viewpolice_get/')
+
+
+def viewpolice_get(request):
+    a = Police.objects.all()
+    return render(request,'admins/policeview.html',{'data':a})
+
+
+def delete_police(request,id):
+    Police.objects.get(USER=id).delete()
+    return redirect('/myapp/viewpolice_get/')
+
+def edit_police_get(request,id):
+    data = Police.objects.get(id=id)
+    return render(request,'admins/edit_police.html',{'data':data})
+
+def edit_police_post(request):
+    id=request.POST['id']
+    name = request.POST['name']
+    email = request.POST['email']
+    phoneno = request.POST['phone']
+    post = request.POST['post']
+    place = request.POST['place']
+    pin = request.POST['pincode']
+
+    a = Police.objects.get(id=id)
+
+    if 'photo' in request.FILES:
+        photo = request.FILES['photo']
+        fs = FileSystemStorage()
+        date = datetime.now().strftime('%d%M%Y%H%M%S') + ".jpg"
+        fs.save(date, photo)
+        path = fs.url(date)
+        a.photo = path
+
+    a.name = name
+    a.email = email
+    a.phone = phoneno
+    a.post=post
+    a.place = place
+    a.pin = pin
+    a.save()
+    return redirect('/myapp/viewpolice_get/')
+
+def admin_viewcriminaldetection_get(request):
+    a=Criminaldetection.objects.all()
+    return render(request,'admins/adminviewcriminaldetection.html',{'data':a})
 
 def change_password_get(request):
     return render(request,'admins/change_password.html')
@@ -105,6 +184,8 @@ def change_password_post(request):
     return redirect("/myapp/login_get/")
 
 
+
+
 def edit_authority_get(request,id):
     data=Authority.objects.get(id=id)
     return render(request,'admins/edit authority.html',{'data':data})
@@ -119,8 +200,6 @@ def edit_authority_post(request):
     pin = request.POST['pincode']
     district = request.POST['district']
     state = request.POST['state']
-
-
 
     a = Authority.objects.get(id=id)
 
@@ -144,12 +223,9 @@ def edit_authority_post(request):
     a.state = state
     a.AUTHUSER=b
     a.save()
-
-
     return redirect('/myapp/viewauthority_get/')
 
 def delete_authority(request,id):
-
     Authority.objects.get(AUTHUSER=id).delete()
     User.objects.get(id=id).delete()
     return redirect('/myapp/viewauthority_get/')
@@ -176,7 +252,7 @@ def viewblockedusers_get(request):
 
 def viewcomplaint_get(request):
     data=Complaint.objects.all()
-    return render(request,'admins/viewcomplaint.html',{'Complaint':data})
+    return render(request,'admins/viewcomplaint.html',{'data':data})
 
 def viewlogs_get(request):
     data=logs.objects.all()
@@ -317,11 +393,6 @@ def viewreply_get(request):
 
 
 #POLICE...
-def edit_police_get(request):
-    return render(request,'Police/edit_police.html')
-
-def edit_police_post(request):
-    return
 
 def register_police_get(request):
     return render(request,'Police/register_police.html')
@@ -341,8 +412,8 @@ def viewcriminaldetectionpolice_get(request):
 def viewobjectdetectionpolice_get(request):
     return render(request,'Police/viewobjectdetectionpolice.html')
 
-def viewpolice_get(request):
-    return render(request,'Police/viewpolice.html')
+# def viewpolice_get(request):
+#     return render(request,'Police/viewpolice.html')
 
 def viewreplypolice_get(request):
     return render(request,'Police/viewreplypolice.html')
