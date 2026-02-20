@@ -69,6 +69,11 @@ urlpatterns = [
     path('viewpolicestaff_get/', views.viewpolicestaff_get),
     path('viewprofile_get/', views.viewprofile_get),
     path('viewreply_get/', views.viewreply_get),
+    path('a_change_password_get/',views.a_change_password_get),
+    path('a_change_password_post/',views.a_change_password_post),
+    path('a_viewcomplaint_get/',views.a_viewcomplaint_get),
+    path('a_sendreply_get/',views.a_sendreply_get),
+    path('a_sendreply_post/',views.a_sendreply_post),
 
 
     # police---

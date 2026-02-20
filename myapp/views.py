@@ -268,6 +268,25 @@ def blockeduser(request,id):
 def authority_home(request):
     return render(request,'Authority/authority_home.html')
 
+def a_change_password_get(request):
+    return render(request,'Authority/change_password.html')
+
+def a_change_password_post(request):
+    current_pass = request.POST['currentpassword']
+    new_pass = request.POST['newpassword']
+    confirm_pass = request.POST['confirmpassword']
+
+    data=request.user
+    if  data.check_password(current_pass):
+        if new_pass==confirm_pass:
+            data.set_password(new_pass)
+            data.save()
+            return redirect("/myapp/login_get/")
+        else:
+            return redirect("/myapp/a_change_password_get/")
+    else:
+        return redirect("/myapp/a_change_password_get/")
+
 def viewprofile_get(request):
     data=Authority.objects.get(AUTHUSER=request.user)
     return render(request,'Authority/viewprofile.html',{'data':data})
@@ -311,6 +330,22 @@ def edit_profile_post(request):
     a.save()
 
     return redirect('/myapp/viewprofile_get/')
+
+def a_viewcomplaint_get(request):
+    data=Complaint.objects.all()
+    return render(request,'Authority/viewcomplaintpolice.html',{'data':data})
+
+def a_sendreply_get(request,id):
+    return render(request,'Authority/sendreplytopolice.html',{'id':id})
+
+def a_sendreply_post(request):
+    id=request.POST['id']
+    reply=request.POST['reply']
+    data=Complaint.objects.get(id=id)
+    data.reply=reply
+    data.status="replied"
+    data.save()
+    return redirect('/myapp/a_viewcomplaint_get/')
 
 
 def manage_criminals_get(request):
@@ -369,7 +404,9 @@ def sendreplytopolice_post(request):
     return
 
 def viewcomplaintpolice_get(request):
-    return render(request,'Authority/viewcomplaintpolice.html')
+    data = Complaint.objects.all()
+    return render(request, 'Authority/viewcomplaintpolice.html', {'data': data})
+
 
 def viewcriminaldetection_get(request):
     return render(request,'Authority/viewcriminaldetection.html')
