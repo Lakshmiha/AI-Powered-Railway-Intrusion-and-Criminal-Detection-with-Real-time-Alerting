@@ -382,8 +382,8 @@ def manage_criminals_post(request):
     return redirect('/myapp/viewcriminals_get/')
 
 def viewcriminals_get(request):
-
-    return render(request,'Authority/viewcriminals.html')
+    data=Criminals.objects.all()
+    return render(request,'Authority/viewcriminals.html',{'data':data})
 
 def register_authority_get(request):
     return render(request,'Authority/register_authority.html')
