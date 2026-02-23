@@ -74,6 +74,7 @@ urlpatterns = [
     path('a_viewcomplaint_get/',views.a_viewcomplaint_get),
     path('a_sendreply_get/',views.a_sendreply_get),
     path('a_sendreply_post/',views.a_sendreply_post),
+    path('delete_criminal/<id>',views.delete_criminal),
 
 
     # police---

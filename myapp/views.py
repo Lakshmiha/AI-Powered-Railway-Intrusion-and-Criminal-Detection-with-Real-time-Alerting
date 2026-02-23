@@ -385,6 +385,15 @@ def viewcriminals_get(request):
     data=Criminals.objects.all()
     return render(request,'Authority/viewcriminals.html',{'data':data})
 
+def edit_criminal_get(request,id):
+    data=Criminals.objects.get(id=id)
+    return render(request,'Authority/edit_criminals.html',{'data':data})
+
+def delete_criminal(request,id):
+    Criminals.objects.filter(id=id).delete()
+    return redirect('/myapp/viewcriminals_get/')
+
+
 def register_authority_get(request):
     return render(request,'Authority/register_authority.html')
 

@@ -29,21 +29,23 @@
         </tr>
       </thead>
       <tbody>
+      {% for i in data %}
         <!-- Sample Data Row -->
         <tr>
-          <td></td>
-          <td></td>
-          <td><img src="https://via.placeholder.com/50" class="img-thumbnail" width="50" /></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+          <td>{{ forloop.counter }}</td>
+          <td>{{ i.criminalname }}</td>
+          <td><img src="{{ i.photo }}" class="img-thumbnail" width="50" /></td>
+          <td>{{ i.identification }}</td>
+          <td>{{ i.dob }}</td>
+          <td>{{ i.offense }}</td>
+          <td>{{ i.height }}</td>
+            <td>{{ i.weight }}</td>
+            <td>{{ i.gender }}</td>
+            <td>{{ i.phoneno }}</td>
             <td><a href="" class="btn btn-danger">edit</a></td>
-            <td><a href="" class="btn btn-danger">delete</a></td>
+            <td><a href="/myapp/delete_criminal/{{ i.id }}" onclick="return confirm('Are you sure?')" class="btn btn-danger">Delete</a></td>
         </tr>
+      {% endfor %}
         <!-- Add more rows dynamically from backend -->
       </tbody>
     </table>
