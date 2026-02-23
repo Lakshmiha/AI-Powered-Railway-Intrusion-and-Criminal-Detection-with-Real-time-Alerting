@@ -10,7 +10,8 @@
 {% block body %}
   <div class="container mt-5">
     <h4 class="mb-4">Send a Reply</h4>
-    <form method="post" action="/myapp/a_sendreply_post/">
+    <form method="post" action="/myapp/sendreplytopolice_post/">
+        {% csrf_token %}
       <input type="hidden" name="id" value="{{ id }}">
 
       <!-- Complaint Text -->

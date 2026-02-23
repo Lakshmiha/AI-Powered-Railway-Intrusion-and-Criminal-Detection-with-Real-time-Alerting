@@ -49,7 +49,6 @@ class Criminals(models.Model):
     weight=models.CharField(max_length=100)
     gender=models.CharField(max_length=100)
     phoneno=models.CharField(max_length=100)
-    USER=models.ForeignKey(User,on_delete=models.CASCADE)
 
 class Complaint(models.Model):
     date=models.DateField()

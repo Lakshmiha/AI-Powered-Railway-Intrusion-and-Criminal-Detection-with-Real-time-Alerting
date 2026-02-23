@@ -33,8 +33,7 @@
           <tr>
             <th>Sl. No.</th>
             <th>Date</th>
-            <th>From</th>
-            <th>Complaint</th>
+            <th>Complaints</th>
             <th>Reply</th>
           </tr>
         </thead>
@@ -44,14 +43,10 @@
           <tr>
             <td>{{ forloop.counter }}</td>
             <td>{{ i.date }}</td>
-            <td>{{ i.AUTHUSER.username }}</td>
             <td>{{ i.complaint }}</td>
             <td>
-                {% if i.status == "Pending" %}
-                <a href="/myapp/viewreply_get/{{ i.id }}" class="btn btn-sm btn-primary">View</a>
-            {% else %}
+
                 {{ i.reply }}
-                {% endif %}
             </td>
           </tr>
           {% endfor %}

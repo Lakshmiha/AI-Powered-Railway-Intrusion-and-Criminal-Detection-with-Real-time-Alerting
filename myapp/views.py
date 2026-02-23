@@ -353,7 +353,7 @@ def manage_criminals_get(request):
 
 def manage_criminals_post(request):
     cname=request.POST['criminalname']
-    photo=request.POST['photo']
+    photo=request.FILES['photo']
     identification=request.POST['identification']
     dob=request.POST['dob']
     offense=request.POST['offense']
@@ -379,7 +379,7 @@ def manage_criminals_post(request):
     c.phoneno=phone
     c.save()
 
-    return redirect('/myapp/')
+    return redirect('/myapp/viewcriminals_get/')
 
 def viewcriminals_get(request):
 
@@ -395,17 +395,46 @@ def sendcomplainttoadmin_get(request):
     return render(request,'Authority/sendcomplainttoadmin.html')
 
 def sendcomplainttoadmin_post(request):
-    return
+    complaint=request.POST['complaint']
+    from datetime import datetime
+    c=Complaint()
+    c.date=datetime.now().date()
+    c.complaint=complaint
+    c.reply="pending"
+    c.status="pending"
+    c.AUTHUSER=User.objects.get(id=request.user.id)
+    c.save()
+    return redirect('/myapp/viewreply_get/')
 
-def sendreplytopolice_get(request):
-    return render(request,'Authority/sendreplytopolice.html')
+def sendreplytopolice_get(request,id):
+    return render(request,'Authority/sendreplytopolice.html',{'id':id})
 
 def sendreplytopolice_post(request):
+    id = request.POST['id']
+    reply = request.POST['reply']
+    data = Complaint.objects.get(id=id)
+    data.reply = reply
+    data.status = "replied"
+    data.save()
+    return redirect('/myapp/viewcomplaintpolice_get/')
     return
 
 def viewcomplaintpolice_get(request):
     data = Complaint.objects.all()
-    return render(request, 'Authority/viewcomplaintpolice.html', {'data': data})
+    l=[]
+    for i in data:
+        if Police.objects.filter(USER_id=i.AUTHUSER.id).exists():
+            name=Police.objects.get(USER_id=i.AUTHUSER.id).name
+            l.append({
+                'id':i.id,
+                'date':i.date,
+                'complaint':i.complaint,
+                'reply':i.reply,
+                'status':i.status,
+                'name':name
+            })
+
+    return render(request, 'Authority/viewcomplaintpolice.html', {'data': l})
 
 
 def viewcriminaldetection_get(request):
@@ -417,12 +446,12 @@ def viewobjectdetection_get(request):
     return render(request,'Authority/viewobjectdetection.html')
 
 def viewpolicestaff_get(request):
-    return render(request,'Authority/viewpolicestaff.html')
-
-
+    data=Police.objects.all()
+    return render(request,'Authority/viewpolicestaff.html',{'data':data})
 
 def viewreply_get(request):
-    return render(request,'Authority/viewreply.html')
+    data=Complaint.objects.filter(AUTHUSER=request.user.id)
+    return render(request,'Authority/viewreply.html',{'data':data})
 
 
 #POLICE...

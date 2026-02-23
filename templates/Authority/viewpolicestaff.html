@@ -22,8 +22,8 @@
           <th>Phone</th>
           <th>Address</th>
           <th>Photo</th>
-            <th></th>
-            <th></th>
+{#            <th></th>#}
+{#            <th></th>#}
         </tr>
       </thead>
       <tbody>
@@ -36,8 +36,8 @@
           <td>{{ i.phone }}</td>
           <td>{{ i.place }} <br> {{ i.pin }} <br> {{ i.post }}</td>
           <td><img src="{{ i.photo }}" class="img-thumbnail" width="50" /></td>
-            <td><a href="/myapp/edit_police_get/{{ i.id }}" class="btn btn-danger">edit</a> </td>
-            <td><a href="/myapp/delete_police/{{ i.USER.id }}" class="btn btn-danger">delete</a> </td>
+{#            <td><a href="/myapp/edit_police_get/{{ i.id }}" class="btn btn-danger">edit</a> </td>#}
+{#            <td><a href="/myapp/delete_police/{{ i.USER.id }}" class="btn btn-danger">delete</a> </td>#}
         </tr>
         {% endfor %}
         <!-- Add more rows dynamically from backend -->

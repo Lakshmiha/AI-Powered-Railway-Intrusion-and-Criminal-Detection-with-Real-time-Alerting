@@ -60,7 +60,7 @@ urlpatterns = [
     path('register_authority_post/', views.register_authority_post),
     path('sendcomplainttoadmin_get/', views.sendcomplainttoadmin_get),
     path('sendcomplainttoadmin_post/', views.sendcomplainttoadmin_post),
-    path('sendreplytopolice_get/', views.sendreplytopolice_get),
+    path('sendreplytopolice_get/<id>', views.sendreplytopolice_get),
     path('sendreplytopolice_post/', views.sendreplytopolice_post),
     path('viewcomplaintpolice_get/', views.viewcomplaintpolice_get),
     path('viewcriminaldetection_get/', views.viewcriminaldetection_get),
