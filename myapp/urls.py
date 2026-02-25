@@ -75,6 +75,8 @@ urlpatterns = [
     path('a_sendreply_get/',views.a_sendreply_get),
     path('a_sendreply_post/',views.a_sendreply_post),
     path('delete_criminal/<id>',views.delete_criminal),
+    path('edit_criminal_get/<id>',views.edit_criminal_get),
+    path('edit_criminal_post/',views.edit_criminal_post),
 
 
     # police---

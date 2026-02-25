@@ -389,6 +389,39 @@ def edit_criminal_get(request,id):
     data=Criminals.objects.get(id=id)
     return render(request,'Authority/edit_criminals.html',{'data':data})
 
+def edit_criminal_post(request):
+    id=request.POST['id']
+    cname=request.POST['criminalname']
+    photo=request.POST.get('photo')
+    identification=request.POST['identification']
+    dob=request.POST['dob']
+    offense=request.POST['offense']
+    height=request.POST['height']
+    weight = request.POST['weight']
+    gender = request.POST['gender']
+    phone = request.POST['phoneno']
+
+    c = Criminals.objects.get(id=id)
+
+    # photo optional
+    if 'photo' in request.FILES:
+        photo = request.FILES['photo']
+        fs = FileSystemStorage()
+        date = datetime.now().strftime('%d%M%Y%H%M%S') + ".jpg"
+        fs.save(date, photo)
+        path = fs.url(date)
+        c.photo = path
+    c.criminalname = cname
+    c.identification = identification
+    c.dob = dob
+    c.offense = offense
+    c.height = height
+    c.weight = weight
+    c.gender = gender
+    c.phoneno = phone
+    c.save()
+    return redirect('/myapp/viewcriminals_get/')
+
 def delete_criminal(request,id):
     Criminals.objects.filter(id=id).delete()
     return redirect('/myapp/viewcriminals_get/')

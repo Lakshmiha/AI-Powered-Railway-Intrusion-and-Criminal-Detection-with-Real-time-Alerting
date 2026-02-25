@@ -42,7 +42,7 @@
             <td>{{ i.weight }}</td>
             <td>{{ i.gender }}</td>
             <td>{{ i.phoneno }}</td>
-            <td><a href="/myapp/edit_criminal_get/" class="btn btn-danger">edit</a></td>
+            <td><a href="/myapp/edit_criminal_get/{{ i.id }}" class="btn btn-danger">edit</a></td>
             <td><a href="/myapp/delete_criminal/{{ i.id }}" onclick="return confirm('Are you sure?')" class="btn btn-danger">Delete</a></td>
         </tr>
       {% endfor %}

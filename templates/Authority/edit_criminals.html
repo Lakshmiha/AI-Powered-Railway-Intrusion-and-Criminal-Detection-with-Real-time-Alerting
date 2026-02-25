@@ -9,8 +9,9 @@
 <body>
   <div class="container">
     <h2 class="mb-4">Edit Criminals Form</h2>
-    <form method="post" enctype="multipart/form-data" action="/myapp/manage_criminals_post/">
+    <form method="post" enctype="multipart/form-data" action="/myapp/edit_criminal_post/">
         {% csrf_token %}
+    <input type="hidden" name="id" value="{{ data.id }}">
       <div class="row mb-3">
         <label for="name" class="col-sm-4 ">Full Name</label>
         <div class="col-sm-8">
