@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User,Group
 from django.core.files.storage import FileSystemStorage
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 
 
@@ -522,3 +523,65 @@ def viewobjectdetectionpolice_get(request):
 def viewreplypolice_get(request):
     return render(request,'Police/viewreplypolice.html')
 
+
+
+#App
+
+def app_login_post(request):
+    username=request.POST['username']
+    password=request.POST['password']
+    user=authenticate(request,username=username,password=password)
+    if user is not None:
+        login(request,user)
+        if user.groups.filter(name="police"):
+            return JsonResponse({'status':'ok','lid':str(user.id)})
+        else:
+            return JsonResponse({'status':'no'})
+    else:
+        return JsonResponse({'status':'no'})
+
+def app_view_profile(request):
+    lid=request.POST['lid']
+    data=Police.objects.get(USER_id=lid)
+    return JsonResponse({'status':'ok','name':data.name,'email':data.email,
+                         'photo':data.photo,'phoneno':data.phoneno,'post':data.post,
+                         'place':data.place,'pin':data.pin})
+
+
+def app_change_password_post(request):
+    current_pass = request.POST['currentpassword']
+    new_pass = request.POST['newpassword']
+    confirm_pass = request.POST['confirmpassword']
+    lid=request.POST['lid']
+    # data=Police.objects.get(USER_id=lid)
+    data=User.objects.get(id=lid)
+    if  data.check_password(current_pass):
+        if new_pass==confirm_pass:
+            return JsonResponse({'status':'ok'})
+        else:
+            return JsonResponse({'status':'no'})
+    else:
+        return JsonResponse({'status':'no'})
+
+
+def app_sendcomplaint_post(request):
+    lid=request.POST['lid']
+    complaint=request.POST['complaint']
+    from datetime import datetime
+    c=Complaint()
+    c.date=datetime.now().date()
+    c.complaint=complaint
+    c.reply="pending"
+    c.status="pending"
+    c.AUTHUSER=User.objects.get(id=lid)
+    c.save()
+    return JsonResponse({'status':'ok'})
+
+
+def app_viewreply_get(request):
+    lid=request.POST['lid']
+    data=Complaint.objects.get(AUTHUSER=lid)
+    l=[]
+    for i in data:
+        l.append({'id':i.id,'date':i.date,'complaint':i.complaint,'reply':i.reply,'status':i.status})
+    return JsonResponse({'status':'ok','data':l})

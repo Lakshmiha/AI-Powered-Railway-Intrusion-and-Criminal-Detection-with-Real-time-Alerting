@@ -89,5 +89,11 @@ urlpatterns = [
     path('viewreplypolice_get/', views.viewreplypolice_get),
 
 
+    #app---
+    path('app_login_post/',views.app_login_post),
+    path('app_view_profile/',views.app_view_profile),
+    path('app_change_password_post/',views.app_change_password_post),
+    path('app_sendcomplaint_post/',views.app_sendcomplaint_post),
+    path('app_viewreply_get/',views.app_viewreply_get),
 
 ]
