@@ -555,8 +555,10 @@ def app_change_password_post(request):
     lid=request.POST['lid']
     # data=Police.objects.get(USER_id=lid)
     data=User.objects.get(id=lid)
-    if  data.check_password(current_pass):
+    if data.check_password(current_pass):
         if new_pass==confirm_pass:
+            data.set_password(new_pass)
+            data.save()
             return JsonResponse({'status':'ok'})
         else:
             return JsonResponse({'status':'no'})
@@ -580,8 +582,13 @@ def app_sendcomplaint_post(request):
 
 def app_viewreply_get(request):
     lid=request.POST['lid']
-    data=Complaint.objects.get(AUTHUSER=lid)
+    data=Complaint.objects.filter(AUTHUSER=lid)
     l=[]
     for i in data:
         l.append({'id':i.id,'date':i.date,'complaint':i.complaint,'reply':i.reply,'status':i.status})
     return JsonResponse({'status':'ok','data':l})
+
+
+# u=User.objects.get(username='admin')
+# u.set_password('123456')
+# u.save()
