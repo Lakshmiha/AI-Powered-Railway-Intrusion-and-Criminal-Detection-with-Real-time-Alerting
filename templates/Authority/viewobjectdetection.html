@@ -9,6 +9,8 @@
   <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
 </head>
 <body>
+{% extends 'Authority/authority_home.html' %}
+{% block body %}
   <div class="container mt-5">
     <h3 class="mb-4">My Viewed Object detections</h3>
 
@@ -85,3 +87,4 @@
   </script>
 </body>
 </html>
+{% endblock %}

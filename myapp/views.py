@@ -78,7 +78,7 @@ def add_authority_post(request):
     a.pin=pin
     a.district=district
     a.state=state
-    a.USER=u
+    a.AUTHUSER=u
     a.save()
     return redirect('/myapp/viewauthority_get/')
 
