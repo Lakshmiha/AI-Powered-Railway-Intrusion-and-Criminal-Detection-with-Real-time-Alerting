@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 8
+names: ['Animals', 'Branches', 'Fallen Trees', 'Other_objects', 'Plant', 'Stone', 'people', 'vehicle']
+
+roboflow:
+  workspace: amaya-w9w1d
+  project: railway-tfabb-awnfe
+  version: 1
+  license: MIT
+  url: https://universe.roboflow.com/amaya-w9w1d/railway-tfabb-awnfe/dataset/1
