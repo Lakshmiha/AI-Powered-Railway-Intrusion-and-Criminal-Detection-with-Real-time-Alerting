@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3c4cc6b3de07162dc0e1212019925b8bfada673d
 import pymysql
 
 class Database:
@@ -34,6 +37,7 @@ class Database:
     def delete(self, q):
         self.cur.execute(q)
         self.cnx.commit()
+<<<<<<< HEAD
         return self.cur.rowcount
 
 # import mysql.connector
@@ -71,3 +75,6 @@ class Database:
 #         self.cnx.commit()
 #         return self.cur.rowcount
 #
+=======
+        return self.cur.rowcount
+>>>>>>> 3c4cc6b3de07162dc0e1212019925b8bfada673d
