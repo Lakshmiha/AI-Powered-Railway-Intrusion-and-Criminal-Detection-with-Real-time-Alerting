@@ -37,13 +37,15 @@
         </thead>
         <tbody>
           <!-- Sample Data Rows -->
+          {% for i in data %}
           <tr>
-            <td>1</td>
-            <td>2025-07-25</td>
-            <td>Bangalore</td>
-            <td>Water leakage near street 12</td>
+            <td>{{ i.log }}</td>
+            <td>{{ i.date }}</td>
+            <td>{{ i.place }}</td>
+            <td>{{ i.time }}</td>
+{#            <td><img src="{{ i.photo }}" class="img-thumbnail" width="50" /></td>#}
           </tr>
-
+          {% endfor %}
           <!-- Add more rows as needed -->
         </tbody>
       </table>

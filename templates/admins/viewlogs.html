@@ -32,10 +32,10 @@
         <thead class="table-light">
           <tr>
             <th>Sl. No.</th>
-            <th>Date</th>
-            <th>From</th>
+            <th>Log</th>
+            <th>Place</th>
             <th>Time</th>
-            <th>Result</th>
+            <th>Date</th>
           </tr>
         </thead>
         <tbody>
@@ -43,10 +43,10 @@
           {% for i in data %}
           <tr>
             <td>{{ forloop.counter }}</td>
-            <td>{{ i.date }}</td>
+            <td><img src="{{ i.log }}" height="100px" width="100px"> </td>
+            <td>{{ i.place }}</td>
             <td>{{ i.time }}</td>
-            <td>{{ i.result }}</td>
-            <td>{{ i.USER.name }}</td>
+              <td>{{ i.date }}</td>
           </tr>
           {% endfor %}
 
