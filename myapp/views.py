@@ -8,7 +8,7 @@ from django.shortcuts import render, redirect
 
 
 # Create your views here.
-from myapp.models import Complaint, Users, logs, Authority, Criminals, Police, Criminaldetection
+from myapp.models import Complaint, Users, logs, Authority, Criminals, Police, Criminaldetection, Objectdetection
 
 
 def login_get(request):
@@ -252,8 +252,8 @@ def viewcomplaint_get(request):
     return render(request,'admins/viewcomplaint.html',{'data':data})
 
 def viewlogs_get(request):
-    data=logs.objects.all()
-    return render(request,'admins/viewlogs.html',{'logs':data})
+    data=Objectdetection.objects.all().order_by('-id')
+    return render(request,'admins/viewlogs.html',{'data':data})
 
 def viewuser_get(request):
     data=Users.objects.all()
@@ -587,6 +587,33 @@ def app_viewreply_get(request):
     for i in data:
         l.append({'id':i.id,'date':i.date,'complaint':i.complaint,'reply':i.reply,'status':i.status})
     return JsonResponse({'status':'ok','data':l})
+
+def app_viewobjectdetectionpolice_get(request):
+    a=Objectdetection.objects.all()
+    list=[]
+    for i in a:
+        list.append({
+            'id':i.id,
+            'log':i.log,
+            'place':i.place,
+            'time':i.time,
+            'date':i.date
+            # 'photo':i.photo
+        })
+    return JsonResponse({'status':'ok','data':list})
+
+def app_viewcriminaldetectionpolice_get(request):
+    a = Criminaldetection.objects.all()
+    list = []
+    for i in a:
+        list.append({
+            'id': i.id,
+            'date': i.date,
+            'photo': i.photo,
+            'time': i.time
+            # 'photo':i.photo
+        })
+    return JsonResponse({'status': 'ok', 'data': list})
 
 
 # u=User.objects.get(username='admin')
