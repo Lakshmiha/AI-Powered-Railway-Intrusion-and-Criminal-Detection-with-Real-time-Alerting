@@ -533,6 +533,7 @@ def app_login_post(request):
     user=authenticate(request,username=username,password=password)
     if user is not None:
         login(request,user)
+        print(request.POST,"============")
         if user.groups.filter(name="police"):
             return JsonResponse({'status':'ok','lid':str(user.id)})
         else:
@@ -619,3 +620,21 @@ def app_viewcriminaldetectionpolice_get(request):
 # u=User.objects.get(username='admin')
 # u.set_password('123456')
 # u.save()
+
+
+# @csrf_exempt
+def and_criminal_view_noti(request):
+    nid=request.POST['nid']
+    print(nid)
+    from datetime import datetime,timedelta
+    # today = datetime.now().date()  # Today's date
+    # two_days_later = today + timedelta(days=2)
+    # print(two_days_later)
+    dd=Criminaldetection.objects.filter(id__gt=nid,date=datetime.now().date()).order_by('id')
+    if dd.exists():
+        f=dd[0]
+        print(f.id)
+        # return JsonResponse({"status":"ok",'nid':f.id,'message':"Prisoner detected on camera: "+f.PRISONER.name })
+        return JsonResponse({"status":"ok",'nid':f.id,'message':f.CRIMINAL.criminalname +" detected on camera"})
+    else:
+        return JsonResponse({"status": "no"})

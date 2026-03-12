@@ -97,5 +97,6 @@ urlpatterns = [
     path('app_viewreply_get/',views.app_viewreply_get),
     path('app_viewobjectdetectionpolice_get/',views.app_viewobjectdetectionpolice_get),
     path('app_viewcriminaldetectionpolice_get/',views.app_viewcriminaldetectionpolice_get),
+    path('and_criminal_view_noti/',views.and_criminal_view_noti),
 
 ]
