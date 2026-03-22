@@ -1,6 +1,7 @@
 from datetime import datetime
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User,Group
 from django.core.files.storage import FileSystemStorage
 from django.http import JsonResponse
@@ -47,6 +48,7 @@ def forgotpassword_post(request):
 def admin_home(request):
     return render(request,'admins/admin_home.html')
 
+@login_required(login_url="/myapp/login_get/")
 def add_authority_get(request):
     return render(request,'admins/add authority.html')
 
@@ -82,7 +84,7 @@ def add_authority_post(request):
     a.save()
     return redirect('/myapp/viewauthority_get/')
 
-
+@login_required(login_url="/myapp/login_get/")
 def add_police_get(request):
     return render(request,'admins/add_police.html')
 
@@ -117,7 +119,7 @@ def add_police_post(request):
     a.save()
     return redirect('/myapp/viewpolice_get/')
 
-
+@login_required(login_url="/myapp/login_get/")
 def viewpolice_get(request):
     a = Police.objects.all()
     return render(request,'admins/policeview.html',{'data':a})
@@ -127,6 +129,7 @@ def delete_police(request,id):
     Police.objects.get(USER=id).delete()
     return redirect('/myapp/viewpolice_get/')
 
+@login_required(login_url="/myapp/login_get/")
 def edit_police_get(request,id):
     data = Police.objects.get(id=id)
     return render(request,'admins/edit_police.html',{'data':data})
@@ -159,10 +162,12 @@ def edit_police_post(request):
     a.save()
     return redirect('/myapp/viewpolice_get/')
 
+@login_required(login_url="/myapp/login_get/")
 def admin_viewcriminaldetection_get(request):
     a=Criminaldetection.objects.all()
     return render(request,'admins/adminviewcriminaldetection.html',{'data':a})
 
+@login_required(login_url="/myapp/login_get/")
 def change_password_get(request):
     return render(request,'admins/change_password.html')
 
@@ -182,7 +187,7 @@ def change_password_post(request):
     else:
         return redirect("/myapp/change_password_get/")
 
-
+@login_required(login_url="/myapp/login_get/")
 def edit_authority_get(request,id):
     data=Authority.objects.get(id=id)
     return render(request,'admins/edit authority.html',{'data':data})
@@ -227,6 +232,7 @@ def delete_authority(request,id):
     User.objects.get(id=id).delete()
     return redirect('/myapp/viewauthority_get/')
 
+@login_required(login_url="/myapp/login_get/")
 def sendreply_get(request,id):
     return render(request,'admins/sendreply.html',{'id':id})
 
@@ -239,22 +245,27 @@ def sendreply_post(request):
     data.save()
     return redirect('/myapp/viewcomplaint_get/')
 
+@login_required(login_url="/myapp/login_get/")
 def viewauthority_get(request):
     data = Authority.objects.all()
     return render(request,'admins/viewauthority.html',{'data':data})
 
+@login_required(login_url="/myapp/login_get/")
 def viewblockedusers_get(request):
     data=Users.objects.filter(status="blocked")
     return render(request,'admins/viewblockedusers.html',{'Users':data})
 
+@login_required(login_url="/myapp/login_get/")
 def viewcomplaint_get(request):
     data=Complaint.objects.all()
     return render(request,'admins/viewcomplaint.html',{'data':data})
 
+@login_required(login_url="/myapp/login_get/")
 def viewlogs_get(request):
     data=Objectdetection.objects.all().order_by('-id')
     return render(request,'admins/viewlogs.html',{'data':data})
 
+@login_required(login_url="/myapp/login_get/")
 def viewuser_get(request):
     data=Users.objects.all()
     return render(request,'admins/viewuser.html',{'Users':data})
@@ -269,6 +280,7 @@ def blockeduser(request,id):
 def authority_home(request):
     return render(request,'Authority/authority_home.html')
 
+@login_required(login_url="/myapp/login_get/")
 def a_change_password_get(request):
     return render(request,'Authority/change_password.html')
 
@@ -288,10 +300,12 @@ def a_change_password_post(request):
     else:
         return redirect("/myapp/a_change_password_get/")
 
+@login_required(login_url="/myapp/login_get/")
 def viewprofile_get(request):
     data=Authority.objects.get(AUTHUSER=request.user)
     return render(request,'Authority/viewprofile.html',{'data':data})
 
+@login_required(login_url="/myapp/login_get/")
 def edit_profile_get(request):
     data=Authority.objects.get(AUTHUSER=request.user)
     return render(request,'Authority/edit_profile.html',{'data':data})
@@ -332,9 +346,11 @@ def edit_profile_post(request):
 
     return redirect('/myapp/viewprofile_get/')
 
+
 def a_viewcomplaint_get(request):
     data=Complaint.objects.all()
     return render(request,'Authority/viewcomplaintpolice.html',{'data':data})
+
 
 def a_sendreply_get(request,id):
     return render(request,'Authority/sendreplytopolice.html',{'id':id})
@@ -348,7 +364,7 @@ def a_sendreply_post(request):
     data.save()
     return redirect('/myapp/a_viewcomplaint_get/')
 
-
+@login_required(login_url="/myapp/login_get/")
 def manage_criminals_get(request):
     return render(request,'Authority/manage_criminals.html')
 
@@ -382,10 +398,12 @@ def manage_criminals_post(request):
 
     return redirect('/myapp/viewcriminals_get/')
 
+@login_required(login_url="/myapp/login_get/")
 def viewcriminals_get(request):
     data=Criminals.objects.all()
     return render(request,'Authority/viewcriminals.html',{'data':data})
 
+@login_required(login_url="/myapp/login_get/")
 def edit_criminal_get(request,id):
     data=Criminals.objects.get(id=id)
     return render(request,'Authority/edit_criminals.html',{'data':data})
@@ -427,13 +445,14 @@ def delete_criminal(request,id):
     Criminals.objects.filter(id=id).delete()
     return redirect('/myapp/viewcriminals_get/')
 
-
+@login_required(login_url="/myapp/login_get/")
 def register_authority_get(request):
     return render(request,'Authority/register_authority.html')
 
 def register_authority_post(request):
     return
 
+@login_required(login_url="/myapp/login_get/")
 def sendcomplainttoadmin_get(request):
     return render(request,'Authority/sendcomplainttoadmin.html')
 
@@ -449,6 +468,7 @@ def sendcomplainttoadmin_post(request):
     c.save()
     return redirect('/myapp/viewreply_get/')
 
+@login_required(login_url="/myapp/login_get/")
 def sendreplytopolice_get(request,id):
     return render(request,'Authority/sendreplytopolice.html',{'id':id})
 
@@ -462,6 +482,7 @@ def sendreplytopolice_post(request):
     return redirect('/myapp/viewcomplaintpolice_get/')
     return
 
+@login_required(login_url="/myapp/login_get/")
 def viewcomplaintpolice_get(request):
     data = Complaint.objects.all()
     l=[]
@@ -479,19 +500,21 @@ def viewcomplaintpolice_get(request):
 
     return render(request, 'Authority/viewcomplaintpolice.html', {'data': l})
 
-
+@login_required(login_url="/myapp/login_get/")
 def viewcriminaldetection_get(request):
     return render(request,'Authority/viewcriminaldetection.html')
 
 
-
+@login_required(login_url="/myapp/login_get/")
 def viewobjectdetection_get(request):
     return render(request,'Authority/viewobjectdetection.html')
 
+@login_required(login_url="/myapp/login_get/")
 def viewpolicestaff_get(request):
     data=Police.objects.all()
     return render(request,'Authority/viewpolicestaff.html',{'data':data})
 
+@login_required(login_url="/myapp/login_get/")
 def viewreply_get(request):
     data=Complaint.objects.filter(AUTHUSER=request.user.id)
     return render(request,'Authority/viewreply.html',{'data':data})
@@ -505,21 +528,25 @@ def register_police_get(request):
 def register_police_post(request):
     return
 
+@login_required(login_url="/myapp/login_get/")
 def sendcomplaintpolice_get(request):
     return render(request,'Police/sendcomplaintpolice.html')
 
 def sendcomplaintpolice_post(request):
     return
 
+@login_required(login_url="/myapp/login_get/")
 def viewcriminaldetectionpolice_get(request):
     return render(request,'Police/viewcriminaldetectionpolice.html')
 
+@login_required(login_url="/myapp/login_get/")
 def viewobjectdetectionpolice_get(request):
     return render(request,'Police/viewobjectdetectionpolice.html')
 
 # def viewpolice_get(request):
 #     return render(request,'Police/viewpolice.html')
 
+@login_required(login_url="/myapp/login_get/")
 def viewreplypolice_get(request):
     return render(request,'Police/viewreplypolice.html')
 
