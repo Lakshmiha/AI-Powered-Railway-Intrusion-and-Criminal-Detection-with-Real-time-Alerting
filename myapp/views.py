@@ -9,7 +9,7 @@ from django.shortcuts import render, redirect
 
 
 # Create your views here.
-from myapp.models import Complaint, Users, logs, Authority, Criminals, Police, Criminaldetection, Objectdetection
+from myapp.models import Complaint, logs, Authority, Criminals, Police, Criminaldetection, Objectdetection
 
 
 def login_get(request):
@@ -249,11 +249,11 @@ def sendreply_post(request):
 def viewauthority_get(request):
     data = Authority.objects.all()
     return render(request,'admins/viewauthority.html',{'data':data})
-
-@login_required(login_url="/myapp/login_get/")
-def viewblockedusers_get(request):
-    data=Users.objects.filter(status="blocked")
-    return render(request,'admins/viewblockedusers.html',{'Users':data})
+#
+# @login_required(login_url="/myapp/login_get/")
+# def viewblockedusers_get(request):
+#     data=Users.objects.filter(status="blocked")
+#     return render(request,'admins/viewblockedusers.html',{'Users':data})
 
 @login_required(login_url="/myapp/login_get/")
 def viewcomplaint_get(request):
@@ -265,14 +265,14 @@ def viewlogs_get(request):
     data=Objectdetection.objects.all().order_by('-id')
     return render(request,'admins/viewlogs.html',{'data':data})
 
-@login_required(login_url="/myapp/login_get/")
-def viewuser_get(request):
-    data=Users.objects.all()
-    return render(request,'admins/viewuser.html',{'Users':data})
-
-def blockeduser(request,id):
-    Users.objects.filter(id=id).update(status="blocked")
-    return redirect('/myapp/viewblockedusers_get/')
+# @login_required(login_url="/myapp/login_get/")
+# def viewuser_get(request):
+#     data=Users.objects.all()
+#     return render(request,'admins/viewuser.html',{'Users':data})
+#
+# def blockeduser(request,id):
+#     Users.objects.filter(id=id).update(status="blocked")
+#     return redirect('/myapp/viewblockedusers_get/')
 
 
 #AUTHORITY...

@@ -3,20 +3,6 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
-class Users(models.Model):
-    name=models.CharField(max_length=100)
-    gender=models.CharField(max_length=100)
-    DOB=models.DateField()
-    email=models.CharField(max_length=100)
-    phone=models.CharField(max_length=100)
-    place=models.CharField(max_length=100)
-    city=models.CharField(max_length=100)
-    pin=models.CharField(max_length=100)
-    district=models.CharField(max_length=100)
-    state=models.CharField(max_length=100)
-    status=models.CharField(max_length=100)
-    AUTHUSER=models.OneToOneField(User,on_delete=models.CASCADE)
-
 
 class Police(models.Model):
     name=models.CharField(max_length=100)
@@ -74,6 +60,6 @@ class logs(models.Model):
     date = models.DateField()
     time = models.TimeField()
     result = models.CharField(max_length=100)
-    USER = models.ForeignKey(Users,on_delete=models.CASCADE)
+    # USER = models.ForeignKey(Users,on_delete=models.CASCADE)
 
 
